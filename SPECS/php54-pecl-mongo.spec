@@ -21,13 +21,10 @@ Release:      1.ius%{?dist}
 License:      ASL 2.0
 Group:        Development/Languages
 URL:          http://pecl.php.net/package/%{pecl_name}
-
 Source:       http://pecl.php.net/get/%{pecl_name}-%{version}.tgz
-
-BuildRoot:    %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-
-BuildRequires: %{php_base}-devel, %{php_base}-pear
-
+%{?el5:BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)}
+BuildRequires: %{php_base}-devel
+BuildRequires: %{php_base}-pear
 Requires(post): %{__pecl}
 Requires(postun): %{__pecl}
 
@@ -60,8 +57,8 @@ phpize
 
 
 %install
+%{?el5:%{__rm} -rf %{buildroot}}
 cd %{pecl_name}-%{version}
-%{__rm} -rf %{buildroot}
 %{__make} install INSTALL_ROOT=%{buildroot}
 
 # Drop in the bit of configuration
@@ -109,8 +106,8 @@ EOF
 %{__install} -m 644 ../package.xml %{buildroot}%{pecl_xmldir}/%{name}.xml
 
 
-%clean
-%{__rm} -rf %{buildroot}
+%{?el5:%clean}
+%{?el5:%{__rm} -rf %{buildroot}}
 
 
 %post
@@ -138,7 +135,6 @@ cd %{pecl_name}-%{version}
 
 
 %files
-%defattr(-, root, root, -)
 %doc %{pecl_name}-%{version}/README.md
 %config(noreplace) %{_sysconfdir}/php.d/%{pecl_name}.ini
 %{php_extdir}/%{pecl_name}.so
