@@ -26,6 +26,7 @@ Source1:      %{pecl_name}.ini
 %{?el5:BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)}
 BuildRequires: %{php_base}-devel
 BuildRequires: %{php_base}-pear
+BuildRequires: openssl-devel
 Requires(post): %{__pecl}
 Requires(postun): %{__pecl}
 
@@ -107,6 +108,7 @@ cd %{pecl_name}-%{version}
 %changelog
 * Tue Mar 17 2015 Carl George <carl.george@rackspace.com> - 1.6.5-1.ius
 - Latest upstream
+- Add build dependency on openssl-devel
 
 * Mon Mar 02 2015 Ben Harper <ben.harper@rackspace.com> - 1.6.3-1.ius
 - Latest upstream
